@@ -35,7 +35,7 @@ async function setupPlugin({ config, global }) {
         `/api/2.0/repositories/${config.bitbucketWorkspace}/${config.repoName}`
 
     try {
-        const posthogRes = await fetchWithRetry(`${global.posthogHost}/api/user`, global.posthogOptions)
+        const posthogRes = await fetchWithRetry(`${global.posthogHost}/api/users/@me`, global.posthogOptions)
         if (posthogRes.status !== 200) {
             throw new Error('Invalid PostHog Personal API key')
         }
