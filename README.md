@@ -2,7 +2,7 @@
 
 Integrate PostHog with Bitbucket and get automatic graph annotations based on your repository's tags so you can analyze the impact of new releases on your key metrics.
 
-![Plugin Screenshot](readme-assets/release-tracker.png)
+![Plugin Screenshot](https://github.com/PostHog/bitbucket-release-tracker/raw/main/readme-assets/release-tracker.png)
 
 Works on both Bitbucket Cloud and Bitbucket Server.
 
