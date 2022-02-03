@@ -1,3 +1,10 @@
+class BitbucketReleaseTrackerError extends Error {
+    constructor(...params) {
+        super(...params)
+        this.name = 'BitbucketReleaseTrackerError'
+    }
+}
+
 async function setupPlugin({ config, global }) {
     let bitbucketBase64AuthToken
 
@@ -37,14 +44,16 @@ async function setupPlugin({ config, global }) {
     try {
         const posthogRes = await fetchWithRetry(`${global.posthogHost}/api/users/@me`, global.posthogOptions)
         if (posthogRes.status !== 200) {
-            throw new Error('Invalid PostHog Personal API key')
+            throw new BitbucketReleaseTrackerError('Invalid PostHog Personal API key')
         }
 
         const bitbucketRes = await fetchWithRetry(global.bitbucketApiBaseUrl, global.bitbucketAuthHeader)
         if (bitbucketRes.status !== 200) {
-            throw new Error('Unable to connect to Bitbucket - Invalid Bitbucket host, workspace, repo name, or token')
+            throw new BitbucketReleaseTrackerError('Unable to connect to Bitbucket - Invalid Bitbucket host, workspace, repo name, or token')
         }
-    } catch {
+    } catch(ex) {
+        if (ex instanceof BitbucketReleaseTrackerError)
+            throw ex
         throw new Error('Unable to connect to APIs')
     }
 }
